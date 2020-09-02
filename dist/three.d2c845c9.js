@@ -36579,12 +36579,19 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement); // -----------------------------------------------------------------------
 
 var geometry = new THREE.BoxGeometry();
-var material = new THREE.MeshBasicMaterial({
+var material = new THREE.MeshPhongMaterial({
   color: 0x00ff00
 });
 var cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 camera.position.z = 5;
+{
+  var color = 0xFFFFFF;
+  var intensity = 1;
+  var light = new THREE.DirectionalLight(color, intensity);
+  light.position.set(-1, 2, 4);
+  scene.add(light);
+}
 
 function animate() {
   requestAnimationFrame(animate);
@@ -36622,7 +36629,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62417" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49734" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
