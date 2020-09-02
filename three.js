@@ -1,13 +1,23 @@
 import * as THREE from 'three';
 
+// SET THE SCENE
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(
-	75, window.innerWidth / window.innerHeight, 0.1, 1000
-);
+
+// SET THE CAMERA
+const fov = 75;
+const aspect = window.innerWidth / window.innerHeight;
+const near = 0.1;
+const far = 1000;
+const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+
 camera.position.z = 5;
 
-const renderer= new THREE.WebGL1Renderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
+// Note: If you don't pass a canvas into three.js it will 
+// create one for you but then you have to add it to your document. 
+const canvas = document.querySelector('#c');
+
+// SET UP RENDERER
+const renderer= new THREE.WebGL1Renderer({canvas});
 document.body.appendChild(renderer.domElement);
 
 const geometry = new THREE.BoxGeometry();
@@ -22,6 +32,17 @@ function makeInstance(geometry, color, x) {
 
 	return cube;
 }
+
+function resizeRendererToDisplaySize(renderer) {
+    const canvas = renderer.domElement;
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    const needResize = canvas.width !== width || canvas.height !== height;
+    if (needResize) {
+      renderer.setSize(width, height, false);
+    }
+    return needResize;
+  }
 
 // light
 const color = 0xFFFFFF;
@@ -40,7 +61,11 @@ function animate(time) {
 	
 	time *= 0.001;
 
-	requestAnimationFrame(animate);
+	if (resizeRendererToDisplaySize(renderer)) {
+		const canvas = renderer.domElement;
+		camera.aspect = canvas.clientWidth / canvas.clientHeight;
+		camera.updateProjectionMatrix();
+	}
 	
 	cubes.forEach((cube, ndx) => {
 		const speed = 1 + ndx * .1;
@@ -50,6 +75,8 @@ function animate(time) {
 	  });
 
 	renderer.render(scene, camera);
+
+	requestAnimationFrame(animate);
 }
 
 animate();

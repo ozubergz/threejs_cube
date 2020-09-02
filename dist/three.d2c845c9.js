@@ -36571,11 +36571,22 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 5;
-var renderer = new THREE.WebGL1Renderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
+// SET THE SCENE
+var scene = new THREE.Scene(); // SET THE CAMERA
+
+var fov = 75;
+var aspect = window.innerWidth / window.innerHeight;
+var near = 0.1;
+var far = 1000;
+var camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+camera.position.z = 5; // Note: If you don't pass a canvas into three.js it will 
+// create one for you but then you have to add it to your document. 
+
+var canvas = document.querySelector('#c'); // SET UP RENDERER
+
+var renderer = new THREE.WebGL1Renderer({
+  canvas: canvas
+});
 document.body.appendChild(renderer.domElement);
 var geometry = new THREE.BoxGeometry();
 
@@ -36587,6 +36598,19 @@ function makeInstance(geometry, color, x) {
   scene.add(cube);
   cube.position.x = x;
   return cube;
+}
+
+function resizeRendererToDisplaySize(renderer) {
+  var canvas = renderer.domElement;
+  var width = canvas.clientWidth;
+  var height = canvas.clientHeight;
+  var needResize = canvas.width !== width || canvas.height !== height;
+
+  if (needResize) {
+    renderer.setSize(width, height, false);
+  }
+
+  return needResize;
 } // light
 
 
@@ -36599,7 +36623,13 @@ var cubes = [makeInstance(geometry, 0x44aa88, 0), makeInstance(geometry, 0x8844a
 
 function animate(time) {
   time *= 0.001;
-  requestAnimationFrame(animate);
+
+  if (resizeRendererToDisplaySize(renderer)) {
+    var _canvas = renderer.domElement;
+    camera.aspect = _canvas.clientWidth / _canvas.clientHeight;
+    camera.updateProjectionMatrix();
+  }
+
   cubes.forEach(function (cube, ndx) {
     var speed = 1 + ndx * .1;
     var rot = time * speed;
@@ -36607,6 +36637,7 @@ function animate(time) {
     cube.rotation.y = rot;
   });
   renderer.render(scene, camera);
+  requestAnimationFrame(animate);
 }
 
 animate();

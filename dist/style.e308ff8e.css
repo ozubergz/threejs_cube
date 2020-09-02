@@ -1,4 +1,14 @@
-body { margin: 0; }
-canvas { display: block; }
+html, body { 
+    margin: 0;
+    height: 100%;
+ }
+
+#c {
+    /* float: left; */
+    /* padding: 5px; */
+    width: 200px;
+    height: 200px;
+}
+
 
 /*# sourceMappingURL=/style.e308ff8e.css.map */
