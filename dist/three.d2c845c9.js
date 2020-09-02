@@ -36571,32 +36571,41 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-// ------------------- set up SCENE, CAMERA & RENDERER ------------------
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 5;
 var renderer = new THREE.WebGL1Renderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement); // -----------------------------------------------------------------------
-
+document.body.appendChild(renderer.domElement);
 var geometry = new THREE.BoxGeometry();
-var material = new THREE.MeshPhongMaterial({
-  color: 0x00ff00
-});
-var cube = new THREE.Mesh(geometry, material);
-scene.add(cube);
-camera.position.z = 5;
-{
-  var color = 0xFFFFFF;
-  var intensity = 1;
-  var light = new THREE.DirectionalLight(color, intensity);
-  light.position.set(-1, 2, 4);
-  scene.add(light);
-}
 
-function animate() {
+function makeInstance(geometry, color, x) {
+  var material = new THREE.MeshPhongMaterial({
+    color: color
+  });
+  var cube = new THREE.Mesh(geometry, material);
+  scene.add(cube);
+  cube.position.x = x;
+  return cube;
+} // light
+
+
+var color = 0xFFFFFF;
+var intensity = 1;
+var light = new THREE.DirectionalLight(color, intensity);
+light.position.set(-1, 2, 4);
+scene.add(light);
+var cubes = [makeInstance(geometry, 0x44aa88, 0), makeInstance(geometry, 0x8844aa, -2), makeInstance(geometry, 0xaa8844, 2)];
+
+function animate(time) {
+  time *= 0.001;
   requestAnimationFrame(animate);
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
+  cubes.forEach(function (cube, ndx) {
+    var speed = 1 + ndx * .1;
+    var rot = time * speed;
+    cube.rotation.x = rot;
+    cube.rotation.y = rot;
+  });
   renderer.render(scene, camera);
 }
 
@@ -36629,7 +36638,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49734" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50460" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
