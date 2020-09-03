@@ -36602,8 +36602,9 @@ function makeInstance(geometry, color, x) {
 
 function resizeRendererToDisplaySize(renderer) {
   var canvas = renderer.domElement;
-  var width = canvas.clientWidth;
-  var height = canvas.clientHeight;
+  var pixelRatio = window.devicePixelRatio;
+  var width = canvas.clientWidth * pixelRatio | 0;
+  var height = canvas.clientHeight * pixelRatio | 0;
   var needResize = canvas.width !== width || canvas.height !== height;
 
   if (needResize) {
@@ -36669,7 +36670,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50460" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49514" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
