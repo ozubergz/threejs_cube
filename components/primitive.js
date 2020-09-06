@@ -20,12 +20,29 @@ camera.position.z = 120;
 const objects = [];
 const spread = 15;
 
+
+// ADD OBJECTS
 function addObject(x, y, obj) {
     obj.position.x = x * spread;
     obj.position.y = y * spread;
 
     scene.add(obj);
     objects.push(obj);
+}
+// END
+
+
+function createMaterial() {
+    const material = new THREE.MeshPhongMaterial({
+        side: THREE.DoubleSide
+    });
+
+    const hue = Math.random();
+    const saturation = 1;
+    const luminance = .5;
+    material.color.setHSL(hue, saturation, luminance);
+
+    return material;
 }
 
 
