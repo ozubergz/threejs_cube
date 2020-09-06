@@ -20,7 +20,6 @@ camera.position.z = 120;
 const objects = [];
 const spread = 15;
 
-
 // ADD OBJECTS
 function addObject(x, y, obj) {
     obj.position.x = x * spread;
@@ -31,7 +30,7 @@ function addObject(x, y, obj) {
 }
 // END
 
-
+// CREATES RANDOM COLOR MATERIAL
 function createMaterial() {
     const material = new THREE.MeshPhongMaterial({
         side: THREE.DoubleSide
@@ -44,6 +43,15 @@ function createMaterial() {
 
     return material;
 }
+// END
+
+function addSolidGeometry(x, y, geometry) {
+    const mesh = new THREE.Mesh(geometry, createMaterial());
+    addObject(x, y, mesh);
+}
+
+
+
 
 
 
