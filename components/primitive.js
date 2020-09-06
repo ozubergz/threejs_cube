@@ -17,6 +17,17 @@ const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 camera.position.z = 120;
 // END
 
+const objects = [];
+const spread = 15;
+
+function addObject(x, y, obj) {
+    obj.position.x = x * spread;
+    obj.position.y = y * spread;
+
+    scene.add(obj);
+    objects.push(obj);
+}
+
 
 
 
