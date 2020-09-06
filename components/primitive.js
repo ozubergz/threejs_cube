@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 
+// SET THE SCENE
 const scene = new THREE.Scene();
+// SET THE BACKGROUND COLOR
 scene.background = new THREE.Color(0xAAAAAA);
 
 const fov = 40;
