@@ -19,6 +19,15 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xAAAAAA);
 // END
 
+// SET LIGHTS
+{
+    const color = 0xFFFFFF;
+    const intesity = 1;
+    const light = new THREE.DirectionalLight(color, intesity);
+    light.position.set(-1, 2, 4);
+    scene.add(light);
+}
+
 const objects = [];
 const spread = 15;
 
@@ -55,12 +64,28 @@ function addSolidGeometry(x, y, geometry) {
 }
 // END
 
+// NOTE: BufferGeometry can not have new vertices easily added.
+// Whereas Geometry can add vertices as you go
+
 {
     const width = 8;
     const height = 8;
     const depth = 8;
     addSolidGeometry(-2, -2, new THREE.BoxBufferGeometry(width, height, depth));
 }
+
+{
+    const radius = 7;
+    const segments = 24;
+    addSolidGeometry(-1, 2, new THREE.CircleBufferGeometry(radius, segments));
+}
+
+{
+    const radius = 6;
+    const height = 8;
+    const segments = 16;
+    addSolidGeometry(0, 2, new THREE.ConeBufferGeometry(radius, height, segments));
+  }
 
 function resizeRendererToDisplaySize(renderer) {
 	const canvas = renderer.domElement;
