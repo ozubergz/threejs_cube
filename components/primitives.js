@@ -85,7 +85,15 @@ function addSolidGeometry(x, y, geometry) {
     const height = 8;
     const segments = 16;
     addSolidGeometry(0, 2, new THREE.ConeBufferGeometry(radius, height, segments));
-  }
+}
+
+{
+    const radiusTop = 4;
+    const radiusBottom = 4;
+    const height = 8;
+    const radialSegments = 12;
+    addSolidGeometry(1, 2, new THREE.CylinderBufferGeometry(radiusTop, radiusBottom, height, radialSegments));
+}
 
 function resizeRendererToDisplaySize(renderer) {
 	const canvas = renderer.domElement;
