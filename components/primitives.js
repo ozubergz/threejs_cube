@@ -1,11 +1,8 @@
 import * as THREE from 'three';
 
-// SET THE SCENE
-const scene = new THREE.Scene();
-// END
-
-// SET THE BACKGROUND COLOR
-scene.background = new THREE.Color(0xAAAAAA);
+//SET RENDERER
+const canvas = document.querySelector("#c");
+const renderer = new THREE.WebGL1Renderer({canvas});
 // END
 
 // SET THE CAMERA
@@ -15,6 +12,11 @@ const near = 0.1;
 const far = 1000;
 const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 camera.position.z = 120;
+// END
+
+// SET THE SCENE
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xAAAAAA);
 // END
 
 const objects = [];
@@ -50,7 +52,24 @@ function addSolidGeometry(x, y, geometry) {
     addObject(x, y, mesh);
 }
 
+{
+    const width = 8;
+    const height = 8;
+    const depth = 8;
+    addSolidGeometry(-2, -2, new THREE.BoxBufferGeometry(width, height, depth));
+}
 
+function resizeRendererToDisplaySize(renderer) {
+	const canvas = renderer.domElement;
+	const pixelRatio = window.devicePixelRatio;
+    const width = canvas.clientWidth * pixelRatio | 0;
+    const height = canvas.clientHeight * pixelRatio | 0;
+    const needResize = canvas.width !== width || canvas.height !== height;
+    if (needResize) {
+      renderer.setSize(width, height, false);
+    }
+    return needResize;
+}
 
 
 
