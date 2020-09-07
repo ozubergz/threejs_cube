@@ -12,13 +12,12 @@ const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 
 camera.position.z = 5;
 
+// SET UP RENDERER
+const canvas = document.querySelector('#c');
+const renderer= new THREE.WebGL1Renderer({canvas});
+
 // Note: If you don't pass a canvas into three.js it will 
 // create one for you but then you have to add it to your document. 
-const canvas = document.querySelector('#c');
-
-// SET UP RENDERER
-const renderer= new THREE.WebGL1Renderer({canvas});
-document.body.appendChild(renderer.domElement);
 
 const geometry = new THREE.BoxGeometry();
 
