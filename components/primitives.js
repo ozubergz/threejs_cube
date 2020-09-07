@@ -47,10 +47,13 @@ function createMaterial() {
 }
 // END
 
+
+// ADD SOLID GEOMETRY TO OBJECTS & SCENE
 function addSolidGeometry(x, y, geometry) {
     const mesh = new THREE.Mesh(geometry, createMaterial());
     addObject(x, y, mesh);
 }
+// END
 
 {
     const width = 8;
@@ -70,6 +73,29 @@ function resizeRendererToDisplaySize(renderer) {
     }
     return needResize;
 }
+
+function animate(time) {
+    time *= 0.001;
+
+	if (resizeRendererToDisplaySize(renderer)) {
+		const canvas = renderer.domElement;
+		camera.aspect = canvas.clientWidth / canvas.clientHeight;
+		camera.updateProjectionMatrix();
+	}
+	
+	objects.forEach((obj, ndx) => {
+		const speed = 1 + ndx * .1;
+		const rot = time * speed;
+		obj.rotation.x = rot;
+		obj.rotation.y = rot;
+	  });
+
+	renderer.render(scene, camera);
+    
+    requestAnimationFrame(animate);
+}
+
+animate();
 
 
 
