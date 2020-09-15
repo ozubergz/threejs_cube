@@ -42,7 +42,7 @@ function resizeRendererToDisplaySize(renderer) {
       renderer.setSize(width, height, false);
     }
     return needResize;
-  }
+}
 
 // light
 const color = 0xFFFFFF;
