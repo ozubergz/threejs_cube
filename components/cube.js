@@ -1,6 +1,10 @@
 import * as THREE from 'three';
 
-let scene, camera, renderer, cube;
+let scene, 
+    camera, 
+    renderer, 
+    cube, 
+    ADD = 0.01;
 
 function createCube() {
     let geometry = new THREE.BoxGeometry();
@@ -25,8 +29,8 @@ function init() {
 
 function animate() {
 
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
+    cube.rotation.x += ADD;
+    cube.rotation.y += ADD;
 
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
