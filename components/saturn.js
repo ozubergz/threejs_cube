@@ -5,23 +5,17 @@ let scene, camera, renderer, sphere, torus, ADD = 0.01;
 
 function createSphere() {
     let geometry = new THREE.SphereGeometry(1, 30, 30);
-    let material = new THREE.MeshBasicMaterial({
-        color: 0x006a71,
-        wireframe: true
-    });
+    let material = new THREE.MeshBasicMaterial({color: 0xcf7500});
     sphere = new THREE.Mesh(geometry, material);
     scene.add(sphere);
 }
 
-function createTorus(radius, tube) {
-    let geometry = new THREE.TorusGeometry(radius, tube, 2, 40);
-    let material = new THREE.MeshBasicMaterial({
-        color: 0xffff00,
-        wireframe: true
-    });
+function createTorus(radius, tube, color) {
+    let geometry = new THREE.TorusGeometry(radius, tube, 2, 42);
+    let material = new THREE.MeshBasicMaterial({color});
     torus = new THREE.Mesh(geometry, material);
     
-    torus.rotateX(-4.5)
+    torus.rotateX(-4.6)
     torus.rotation.y = 3.5;
 
     scene.add(torus);
@@ -34,9 +28,9 @@ function init() {
     camera.position.z = 5;
 
     createSphere();
-    createTorus(1.5, .3);
-    createTorus(2.1, .2);
-    createTorus(2.6, .15);
+    createTorus(1.5, .3, 0xf0a500);
+    createTorus(2.1, .2, 0xffff00);
+    createTorus(2.6, .15, 0xf0a500);
 
     renderer = new THREE.WebGL1Renderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
