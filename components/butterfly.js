@@ -10,7 +10,6 @@ let createButterfly = function() {
     let material = new THREE.MeshBasicMaterial({
         color: 0xa37eba,
         side: THREE.DoubleSide,
-        // wireframe: true
     });
 
     butterfly = new THREE.Mesh(geometry, material);
@@ -18,14 +17,14 @@ let createButterfly = function() {
     // create corners
     geometry.vertices.push(new THREE.Vector3(0, 0, 0)); //vertices[0]
     geometry.vertices.push(new THREE.Vector3(2, 0, 0)); //vertices[1]
-    geometry.vertices.push(new THREE.Vector3(1, 1, .6)); //vertices[2]
-    geometry.vertices.push(new THREE.Vector3(1, 1, -.6)); //vertices[3]
+    geometry.vertices.push(new THREE.Vector3(.7, 1, .6)); //vertices[2]
+    geometry.vertices.push(new THREE.Vector3(.7, 1, -.6)); //vertices[3]
 
     geometry.faces.push(new THREE.Face3(0, 1, 2));
     geometry.faces.push(new THREE.Face3(0, 1, 3));
 
     butterfly.rotation.z = 0.6;
-    butterfly.rotation.x = 0.3;
+    butterfly.rotation.y = 0.2;
 
     scene.add(butterfly);
 }
@@ -36,8 +35,6 @@ let init = function() {
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 5;
 
-    // camera.position.x = 1;
-
     createButterfly();
     
     renderer = new THREE.WebGL1Renderer();
@@ -46,8 +43,6 @@ let init = function() {
 }
 
 let animate = function() {
-
-    // butterfly.rotation.y += ADD
 
     butterfly.geometry.vertices[2].y += ADD;
     butterfly.geometry.vertices[3].y += ADD;
