@@ -1,30 +1,33 @@
 import * as THREE from 'three';
+import { Face3, AddEquation } from 'three';
 
-let scene, camera, renderer, triangle;
+let scene, camera, renderer, butterfly, ADD = 0.1;
 
-let customGeometry = function(z) {
+let createButterfly = function() {
     // create geometry
     let geometry = new THREE.Geometry();
-    
-    // create corners
-    geometry.vertices.push(new THREE.Vector3(1.5, 0, 0)); //vertices[0]
-    geometry.vertices.push(new THREE.Vector3(0, 1, 0)); //vertices[1]
-    geometry.vertices.push(new THREE.Vector3(0, 0, z)); //vertices[2]
-
-    geometry.faces.push(new THREE.Face3(0, 1, 2));
 
     let material = new THREE.MeshBasicMaterial({
         color: 0xa37eba,
-        side: THREE.DoubleSide
+        side: THREE.DoubleSide,
+        // wireframe: true
     });
 
-    triangle = new THREE.Mesh(geometry, material);
+    butterfly = new THREE.Mesh(geometry, material);
     
-    
-    triangle.rotation.x = 5
+    // create corners
+    geometry.vertices.push(new THREE.Vector3(0, 0, 0)); //vertices[0]
+    geometry.vertices.push(new THREE.Vector3(2, 0, 0)); //vertices[1]
+    geometry.vertices.push(new THREE.Vector3(1, 1, 2)); //vertices[2]
+    geometry.vertices.push(new THREE.Vector3(1, 1, -2)); //vertices[3]
 
-    scene.add(triangle);
-    
+    geometry.faces.push(new THREE.Face3(0, 1, 2));
+    geometry.faces.push(new THREE.Face3(0, 1, 3));
+
+    butterfly.rotation.z = 0.6;
+    butterfly.rotation.x = 0.3;
+
+    scene.add(butterfly);
 }
 
 let init = function() {
@@ -33,10 +36,7 @@ let init = function() {
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 5;
 
-    customGeometry(1);
-    customGeometry(-1);
-
-    // camera.rotation.x = 1;
+    createButterfly();
     
     renderer = new THREE.WebGL1Renderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -44,11 +44,15 @@ let init = function() {
 }
 
 let animate = function() {
-    // triangle.rotation.y += 0.01;
-    // triangle.rotation.y += 0.01;
 
-    // camera.rotation.x += 0.01
+    butterfly.geometry.vertices[2].y += ADD;
+    butterfly.geometry.vertices[3].y += ADD;
+    butterfly.geometry.verticesNeedUpdate = true;
 
+    if(butterfly.geometry.vertices[2].y < -1 || butterfly.geometry.vertices[2].y > 1) {
+        ADD *= -1
+    }
+    
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
 }
