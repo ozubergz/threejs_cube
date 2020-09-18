@@ -5,7 +5,6 @@ let scene,
     renderer, 
     sphere, 
     torus, 
-    rings = [], 
     ADD = 0.01;
 
 function createSphere() {
@@ -24,7 +23,6 @@ function createTorus(radius, tube, color) {
     torus.rotation.y = 0.5;
 
     scene.add(torus);
-    rings.push(torus);
 }
 
 function createSaturn() {
