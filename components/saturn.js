@@ -12,22 +12,22 @@ function createSphere() {
     scene.add(sphere);
 }
 
-function createTorus(radius, tube, color) {
+function createRing(radius, tube, color) {
     let geometry = new THREE.TorusGeometry(radius, tube, 2, 50);
     let material = new THREE.MeshBasicMaterial({color});
-    let torus = new THREE.Mesh(geometry, material);
+    let ring = new THREE.Mesh(geometry, material);
     
-    torus.rotation.x = 1.7
-    torus.rotation.y = 0.5;
+    ring.rotation.x = 1.7;
+    ring.rotation.y = 0.3;
 
-    scene.add(torus);
+    scene.add(ring);
 }
 
 function createSaturn() {
     createSphere();
-    createTorus(1.4, .2, 0xf0a500);
-    createTorus(1.9, .2, 0xffcb8e);
-    createTorus(2.4, .2, 0xe89f71);
+    createRing(1.4, .2, 0xf0a500);
+    createRing(1.9, .2, 0xffcb8e);
+    createRing(2.4, .2, 0xe89f71);
 }
 
 function init() {
