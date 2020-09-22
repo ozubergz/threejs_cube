@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-// import { AddEquation } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
@@ -22,9 +21,14 @@ function load3dModel() {
         model = gltf.scene;
 
         // adds emission which makes the model to glow brighter
-        model.traverse((o) => {
-            if (o.isMesh) {
-                o.material.emissiveIntensity = 5;
+        model.traverse((node) => {
+            if (node.isMesh) {
+                console.log(node.material)
+                // node.material.side = 3;
+                
+                node.material.transparent = true;
+                node.material.opacity = .5;
+                node.material.emissiveIntensity = 5;
             }
         });
 
@@ -61,10 +65,10 @@ function animate() {
     if(model) {
         model.rotation.y += ADD;
     }
-
-    // renderer.render(scene, camera);
+    
     requestAnimationFrame(animate);
 
+    // renderer.render(scene, camera);
     composer.render();
 }
 
