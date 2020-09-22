@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import Earth from '../public/Earth.glb';
+import Earth from '../public/Earth.glb.gltf';
 
 
 let scene, 
@@ -14,6 +14,14 @@ function load3dModel() {
     loader = new GLTFLoader();
     loader.load(Earth, function(gltf) {
         model = gltf.scene;
+
+        // adds emission which makes the model to glow brighter
+        model.traverse((o) => {
+            if (o.isMesh) {
+                o.material.emissiveIntensity = 5;
+            }
+        });
+
         scene.add(model)
     });
 }

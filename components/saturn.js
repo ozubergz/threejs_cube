@@ -12,6 +12,15 @@ function createSphere() {
     scene.add(sphere);
 }
 
+// {
+//     const color = 0xFFFFFF;
+//     const intensity = 1;
+//     const light = new THREE.DirectionalLight(color, intensity);
+//     light.position.set(-1, 2, 4);
+//     scene.add(light);
+//   }
+
+
 function createRing(radius, tube, color) {
     let geometry = new THREE.TorusGeometry(radius, tube, 2, 50);
     let material = new THREE.MeshBasicMaterial({color});
