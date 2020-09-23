@@ -3,9 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
-
-
-import Earth from '../public/Earth.glb.gltf';
+import Earth from '../public/Earth.glb';
 
 let scene, 
     camera, 
@@ -24,11 +22,10 @@ function load3dModel() {
         model.traverse((node) => {
             if (node.isMesh) {
                 console.log(node.material)
-                // node.material.side = 3;
-                
+                node.material.depthWrite = false;
                 node.material.transparent = true;
                 node.material.opacity = .5;
-                node.material.emissiveIntensity = 5;
+                node.material.emissiveIntensity = 3;
             }
         });
 
@@ -57,7 +54,7 @@ function postProcessing() {
     composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
 
-    let bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), .5, 0, 0.1);
+    let bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), .6, 0, 0.1);
     composer.addPass(bloomPass);
 }
 
