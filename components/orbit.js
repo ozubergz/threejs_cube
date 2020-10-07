@@ -6,7 +6,27 @@ const createSphere = () => {
     const geometry = new THREE.SphereGeometry(.5, 20, 20);
     const material = new THREE.MeshBasicMaterial({color: 0xeeeeee});
     const sphere = new THREE.Mesh(geometry, material);
-    scene.add(sphere)
+    scene.add(sphere);
+}
+
+const createEllipse = () => {
+    let curve = new THREE.EllipseCurve(
+        0,  0,            // ax, aY
+        2, 2,           // xRadius, yRadius
+        0,  2 * Math.PI,  // aStartAngle, aEndAngle
+        false,            // aClockwise
+        0                 // aRotation
+    );
+    
+    let points = curve.getPoints( 50 );
+    let geometry = new THREE.BufferGeometry().setFromPoints( points );
+    
+    let material = new THREE.LineBasicMaterial( { color : 0xff0000 } );
+    
+    // Create the final object to add to the scene
+    let ellipse = new THREE.Line( geometry, material );
+    
+    scene.add(ellipse)
 }
 
 const init = () => {
@@ -17,6 +37,7 @@ const init = () => {
     camera.position.z =5;
 
     createSphere();
+    createEllipse();
     
     renderer = new THREE.WebGL1Renderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
