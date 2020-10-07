@@ -4,6 +4,7 @@ let scene,
     camera, 
     renderer, 
     ADD = 0.01;
+    
 
 function createSphere() {
     let geometry = new THREE.SphereGeometry(1, 30, 30);
