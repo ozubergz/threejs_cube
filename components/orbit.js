@@ -3,8 +3,10 @@ import * as THREE from 'three';
 let scene, camera, renderer;
 
 const createSphere = () => {
-    const sphere = new THREE.SphereGeometry(1, 30, 30);
-    
+    const geometry = new THREE.SphereGeometry(.5, 20, 20);
+    const material = new THREE.MeshBasicMaterial({color: 0xeeeeee});
+    const sphere = new THREE.Mesh(geometry, material);
+    scene.add(sphere)
 }
 
 const init = () => {
@@ -13,6 +15,8 @@ const init = () => {
     
     camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
     camera.position.z =5;
+
+    createSphere();
     
     renderer = new THREE.WebGL1Renderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
