@@ -11,7 +11,7 @@ const createSun = () => {
 }
 
 const createMercury = () => {
-    const geometry = new THREE.SphereGeometry(.5, 30, 30);
+    const geometry = new THREE.SphereGeometry(.2, 30, 30);
     const material = new THREE.MeshBasicMaterial({color: 0xeeeeee});
     mercury = new THREE.Mesh(geometry, material);
 
@@ -57,9 +57,16 @@ const init = () => {
     document.body.appendChild(renderer.domElement)
 }
 
+let speed = 0;
+let radius = 2.5;
+
 const animate = () => {
     requestAnimationFrame(animate);
 
+    speed += 0.01;
+
+    mercury.position.x = Math.cos(speed) * radius;
+    mercury.position.z = Math.sin(speed) * radius; // These to strings make it work
     
     renderer.render(scene, camera);
 }
