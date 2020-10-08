@@ -1,16 +1,21 @@
 import * as THREE from 'three';
 
-let scene, camera, renderer;
+let scene, camera, renderer, sun, mercury;
 
-const createSphere = (size, x, y) => {
-    const geometry = new THREE.SphereGeometry(size, 20, 20);
+const createSun = () => {
+    const geometry = new THREE.SphereGeometry(1, 30, 30);
     const material = new THREE.MeshBasicMaterial({color: 0xeeeeee});
-    const sphere = new THREE.Mesh(geometry, material);
-    
-    sphere.position.x = x
-    sphere.position.y = y
+    sun = new THREE.Mesh(geometry, material);
 
-    scene.add(sphere);
+    scene.add(sun);
+}
+
+const createMercury = () => {
+    const geometry = new THREE.SphereGeometry(.5, 30, 30);
+    const material = new THREE.MeshBasicMaterial({color: 0xeeeeee});
+    mercury = new THREE.Mesh(geometry, material);
+
+    scene.add(mercury);
 }
 
 const createEllipse = () => {
@@ -36,16 +41,15 @@ const createEllipse = () => {
 }
 
 
-
 const init = () => {
     scene = new THREE.Scene();
     scene.background = new THREE.Color( 0x373a40 );
     
     camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-    camera.position.z =5;
+    camera.position.z = 5;
 
-    createSphere(1, 0, 0);
-    createSphere(.5, 2, 0);
+    createSun();
+    createMercury();
     createEllipse();
     
     renderer = new THREE.WebGL1Renderer();
@@ -54,8 +58,10 @@ const init = () => {
 }
 
 const animate = () => {
+    requestAnimationFrame(animate);
+
+    
     renderer.render(scene, camera);
-    requestAnimationFrame(animate)
 }
 
 init();
